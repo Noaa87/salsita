@@ -1,0 +1,21 @@
+** Start **
+      - start the browser (Firefox or Chrome) and open 'https://qa-engineer.herokuapp.com'
+  ** Main Page **
+      - click the Enter button -- "code" page loads
+  ** Code Page **
+      - on the code page: find a "secret" input element and enter its value into the input field
+      - ensure that the "robot" checkbox is checked
+      - submit the form -- "lists" page loads (list of famous quotes)
+  ** Lists Page **
+      On this page there are quote categories "Famous Quotes" and "Awesome Quotes",
+      each having several quotes. Each quote has a score number in parentheses.
+      At the bottom there is a "Total score" number.
+      The texts (category names and quotes in each category) are always the same,
+      however they are presented in random order. The score numbers are volatile.
+      The test script shall:
+      - verify that all the categories and their quotes are displayed. No extra quotes, no missing ones.
+      - verify that the "Total score:" is the sum of all quote scores
+
+
+Notes:
+- keep it simple, test only the scenario above (not negative scenarios or other things)
