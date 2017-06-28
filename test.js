@@ -1,16 +1,19 @@
 const URL = "https://qa-engineer.herokuapp.com"
-let EC = protractor.ExpectedConditions;
-let timeout = 3000;
+const URL_code = "https://qa-engineer.herokuapp.com/code"
+const URL_lists = "https://qa-engineer.herokuapp.com/lists"
+const timeout = 3000;
+const numofQuotes = 5;
 
+let EC = protractor.ExpectedConditions;
 
 // this function asserts that the quotes are all present in the page (famous and awesome): it's called twice
 let checkQuotes = (quotesType, QuotesToAssert) => {
     let QuotesBlock = element(by.cssContainingText('body>ul>li', quotesType))
     browser.wait(EC.visibilityOf(QuotesBlock), timeout, 'quotes display correctly');
     let Quotes = QuotesBlock.$$('ul>li span:not(.score)').getText().then((texts) => {
-        expect(texts.length).toEqual(5, 'number of quotes is not 5 as expected');
-        texts.map((quote) => {
-            expect(QuotesToAssert.indexOf(quote)).not.toEqual(-1, `${quote} should not appear`);
+        expect(texts.length).toEqual(numofQuotes, 'number of quotes is not correct');
+        QuotesToAssert.map((quote) => {
+            expect(texts.indexOf(quote)).not.toEqual(-1, `The following quote did NOT appear among the ${quotesType}: \n ${quote} `);
         });
     });
 }
@@ -43,17 +46,18 @@ describe('QA Engineer Test', function() {
     it('should verify quotes and categories', () => {
         browser.wait(EC.textToBePresentInElement($('#enter'), "Enter"), timeout, 'Expect to find button with Enter as text');
         $('#enter').click();
-        browser.wait(EC.urlIs('https://qa-engineer.herokuapp.com/code'), timeout, 'URL did not match the expcted one /code');
+        browser.wait(EC.urlIs(URL_code), timeout, 'URL did not match the expected one /code');
         $('input[type="hidden"]').getAttribute("value").then(function(valuex) {
             $('input[type="text"]').sendKeys(valuex);
         });
 
-        $('input[type="checkbox"]').click();
+        let checkbox = $('input[type="checkbox"]');
+        if (!checkbox.isSelected())
+            checkbox.click();
 
         element(by.buttonText('Submit')).click();
-        browser.wait(EC.urlIs('https://qa-engineer.herokuapp.com/lists'), timeout, 'URL did not match the expcted one /lists');
+        browser.wait(EC.urlIs(URL_lists), timeout, 'URL did not match the expected one /lists');
 
-        // calling the function which asserts the presence of all quotes in the correct groups
         checkQuotes('Awesome Quotes', awesomeQuotesToAssert);
         checkQuotes('Famous Quotes', famousQuotesToAssert);
 
@@ -62,7 +66,7 @@ describe('QA Engineer Test', function() {
             return texts.reduce((total, num) => { return (+total) + (+num) });
         })
 
-        // getting the value of Total Score as a number
+        // getting the value of Total Score as a number - using regexes 
         let totalScore = $('body').getText().then(text => {
             let matched = /Total score: (.*)/gm.exec(text)
             return +matched[1]
@@ -70,7 +74,6 @@ describe('QA Engineer Test', function() {
 
         // checking that total Scores actually matches the sum of all scores
         expect(totalScore).toBe(scoresSumm, '<total score> does NOT match with the sum of scores')
-
     });
 
 });
