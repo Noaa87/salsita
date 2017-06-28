@@ -7,7 +7,6 @@ Test - QA Automation Engineer
 **Framework: ProtractorJS**
 
 `Protractor  <http://www.protractortest.org/#/>`_
-is an end-to-end test framework for Angular and AngularJS applications
 
 **Get Started**
 
