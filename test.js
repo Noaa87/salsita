@@ -52,7 +52,7 @@ describe('QA Engineer Test', function() {
 
         let checkbox = $('input[type="checkbox"]');
         checkbox.isSelected().then(selected=> {
-            if (selected){
+            if (!selected){
                 checkbox.click();
             }
         })
