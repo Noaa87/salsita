@@ -52,8 +52,11 @@ describe('QA Engineer Test', function() {
         });
 
         let checkbox = $('input[type="checkbox"]');
-        if (!checkbox.isSelected())
-            checkbox.click();
+        checkbox.isSelected().then(selected=> {
+            if (selected){
+                checkbox.click();
+            }
+        })
 
         element(by.buttonText('Submit')).click();
         browser.wait(EC.urlIs(URL_lists), timeout, 'URL did not match the expected one /lists');
