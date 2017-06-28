@@ -1,4 +1,3 @@
-const URL = "https://qa-engineer.herokuapp.com"
 const URL_code = "https://qa-engineer.herokuapp.com/code"
 const URL_lists = "https://qa-engineer.herokuapp.com/lists"
 const timeout = 3000;
