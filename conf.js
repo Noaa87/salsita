@@ -1,4 +1,5 @@
 exports.config = {
+  baseUrl: "https://qa-engineer.herokuapp.com",
   framework: 'jasmine',
   specs: ['test.js'],
   multiCapabilities: [{
@@ -6,7 +7,4 @@ exports.config = {
   }],
   // using browser driver directly
   directConnect: 'true'
-  // onPrepare: function() 
-  // {
-  // }
 }
